@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>A One Page Faq</title>
+<link href="{{ MEDIA_URL }}site.css" rel="stylesheet">
+<script src="{{STATIC_URL}}jquery-1.7.2.min.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlYOxM9Aw5n0V8zqxeyhMa6kyxnLoDRDU&sensor=true">
+
+<style>
+.g {
+background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.33, rgb(14,173,173)), color-stop(0.67, rgb(0,255,255)));
+background-image: -moz-linear-gradient(center bottom, rgb(14,173,173) 33%, rgb(0,255,255) 67% );
+padding: 2px;
+}
+
+.g > div { background: #fff; }
+
+
+#login {
+	width: 300px;
+	position: absolute;
+	left: 900px;
+	top: 6px;
+	z-index: 100;
+}
+
+#open {
+	margin: 0;
+	cursor: pointer;
+	background: rgb(255,255,255)  url(open.png) no-repeat 8px 7px;
+	color: rgb(58,80,123);
+	padding: 5px 0 2px 30px;
+}
+
+#login .close {
+	background-image: url(close.png);
+	background-color: rgb(110,138,195);	
+}
+
+#open:hover {
+	color: rgb(0,0,0);
+	background-color: rgb(110,138,195);	
+}
+
+#login form {
+	padding: 10px 10px 10px 10px;
+	display: none;	
+	background-color: rgb(255,255,255);
+}
+#login label {
+	display: inline-block;
+	width: 100px;
+	text-align:right;
+	margin: 0 15px 0 0;
+	color: rgb(58,80,123);
+}
+#login input {
+	font-size: 14px;	
+}
+#login #button {
+	margin-left: 50px;	
+}
+</style>
+<script>
+
+</script>
+<script>
+$(document).ready(function() {
+
+
+
+
+  $('#open').toggle(
+      function() {
+	     $('#login form').slideDown(300);
+	     $(this).addClass('close');
+	  },
+	  function() {
+		 $('#login form').fadeOut(600);
+	     $(this).removeClass('close');
+      }
+  ); // end toggle
+
+
+
+{% if response_dict %}
+    var data={{ response_dict|safe }}
+ //   alert(data);
+    address=[];
+    var i=0;
+    for (var x = 0; x < data.length; x++)
+    {
+        var dict=({'address': data[x]});
+        alert(data[x]);
+        alert(dict['address']);
+        address.push(dict);
+        i++;
+    }
+   // for (x in address)
+   // {
+
+{% endif %} 
+
+}); // end ready
+</script>
+
+
+
+<script></script>
+
+
+
+
+
+
+
+</head>
+<body>
+<div class="wrapper">
+<div class="child">
+
+</div>
+<div class="header">
+	<div align="center">
+	<p class="logo">Twot <i></i> <i class="mm">The<br>Twitter and Maps<br>App</i></p>
+	</div>
+</div>
+
+<div id="login">
+<p id="open">Lookup</p>
+
+<form action="" method="POST">
+	<p>
+		<label for="username">Screen Name:</label>
+{% csrf_token %}
+		<input type="text" name="username" id="username" value="a">
+	</p>
+	
+	<p>
+		<input type="submit" name="button" id="button" value="Submit">
+	</p>
+</form>
+
+
+
+</div>
+<div class="content">
+<div class="main">
+<h1>Stalk Him/Her</h1>
+<p>Click the Lookup button at the top of the page</p>
+</div>
+</div>
+<h2>JSON</h2>
+<pre id="result">
+</pre>
+
+<div align="center" class="g">
+<iframe src="/new/" width="95%" height="400"></iframe>
+</div>
+
+
+<div class="footer">
+
+<p>brought to you by Aritra Ghosh Varun Gangal Pallavi Gudipati Nikhil Nainani</p>
+</div>
+</div>
+
+</body>
+</html>

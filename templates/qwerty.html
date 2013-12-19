@@ -1,0 +1,13 @@
+{% load dajaxice_templatetags %}
+<html>
+<head>
+<script src="{{STATIC_URL}}jquery-1.7.2.min.js"></script>
+<script>
+function my_callback(data){
+    alert(data.message);
+}
+</script>
+{% dajaxice_js_import %}
+</head>
+<input type="button" onclick="Dajaxice.examples.dajaxice_example(my_callback)" value="Get message from server!">
+</html>

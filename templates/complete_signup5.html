@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Twinfluence</title>
+<link href="{{ MEDIA_URL }}site.css" rel="stylesheet">
+<script src="{{STATIC_URL}}jquery-1.7.2.min.js"></script>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJnsmbZsIwB1nJvlesaWn2rjNlfVjbkTA&sensor=true">
+    </script>
+    <style type="text/css">
+      body {
+       /* padding-top: 40px;
+        padding-bottom: 40px;*/
+       background-color:rgba(120, 134, 163, 0.34);
+        
+     	/*background-size: 1440px 800px;*/
+      }
+    </style>
+<style>
+.g {
+background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.33, rgb(14,173,173)), color-stop(0.67, rgb(0,255,255)));
+background-image: -moz-linear-gradient(center bottom, rgb(14,173,173) 33%, rgb(0,255,255) 67% );
+padding: 2px;
+}
+
+.g > div { background: #fff; }
+
+
+#login {
+	width: 300px;
+	position: absolute;
+	left: 900px;
+	top: 6px;
+	z-index: 100;
+}
+#influence {
+font-weight: bold;
+
+}
+#reach {
+
+}
+#impact {
+
+}
+#buzz {
+
+}
+
+#open {
+	margin: 0;
+	cursor: pointer;
+	background: rgb(255,255,255)  url({{ MEDIA_URL }}open.png) no-repeat 8px 7px;
+	color: rgb(58,80,123);
+	padding: 5px 0 2px 30px;
+}
+
+#login .close {
+	background-image: url( {{ MEDIA_URL }}close.png);
+	background-color: rgb(110,138,195);	
+}
+
+#open:hover {
+	color: rgb(0,0,0);
+	background-color: rgb(110,138,195);	
+}
+
+#login form {
+	padding: 10px 10px 10px 10px;
+	display: none;	
+	background-color: rgb(255,255,255);
+}
+#login label {
+	display: inline-block;
+	width: 100px;
+	text-align:right;
+	margin: 0 15px 0 0;
+	color: rgb(58,80,123);
+}
+#login input {
+	font-size: 14px;	
+}
+#login #button {
+	margin-left: 50px;	
+}
+#map-canvas
+{
+    height: 500px;
+    width: 1000px;
+    float:right;
+}
+#data
+{
+    margin-left: 13px;
+    height: 440px;    
+    float:left;
+    border:1px solid black;
+    text-align: center;
+    padding: 30px;
+    padding-left: 45px;
+}
+.logo1{
+width: 180px;
+margin-top: 21px;
+}
+td,th
+{
+    border:1px solid black;
+}
+
+.logo{
+margin-top: 21px;
+color: black;
+font-family: ComicSans;
+}
+table{
+margin-left: -20px;
+}
+
+
+</style>
+<script>
+
+</script>
+
+<script>
+function runQuery(query, handler) {  
+    gadgets.io.makeRequest(BASE_URI, handler, {  
+        METHOD: 'POST',  
+        POST_DATA: toQueryString({q: query, format: 'json'}),  
+        CONTENT_TYPE: 'JSON',  
+        AUTHORIZATION: 'OAuth'  
+    });  
+  };
+</script>
+
+<script>
+$(document).ready(function() {
+
+
+
+  $('#open').toggle(
+      function() {
+	     $('#login form').slideDown(300);
+	     $(this).addClass('close');
+	  },
+	  function() {
+		 $('#login form').fadeOut(600);
+	     $(this).removeClass('close');
+      }
+  ); // end toggle
+
+
+address=[];
+//address.push("Delhi");
+{% if response_dict %}
+    var data={{ response_dict|safe }}
+ //   alert(data);    
+    var i=0;
+    for (var x = 0; x < data.length; x++)
+    {
+        var dict=data[x];
+        
+        address.push(dict);
+        i++;
+    }
+   // for (x in address)
+   // {
+    
+{% endif %} 
+
+
+
+
+        function getRandomSuffix(){
+                return "_"+((new Date()).getTime()+Math.floor(Math.random()*100));
+            }
+      function getJSONFromYQL(url,callback){
+                var callBackName='callback'+getRandomSuffix();;
+                window[callBackName]=callback;
+                var scriptElement=document.createElement('script');
+                scriptElement.src=url+"&callback="+callBackName;
+                document.body.appendChild(scriptElement);
+                return;
+            }
+      function initialize() {
+
+
+        //alert("Hi");
+        var mapOptions = {
+          center: new google.maps.LatLng(20,80 ),
+          zoom: 4,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+	var map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+	
+	
+	/*for(var i=0;i<2;i++)
+	{
+		marker[i] = new google.maps.Marker();
+		geocoder[i] = new google.maps.Geocoder();
+	}*/
+
+
+	var contentString = '<div id="content">'+
+    '<div id="siteNotice">'+
+    '</div>'+
+    '<h2 id="firstHeading" class="firstHeading">Twinfluence</h2>'+
+    '<div id="bodyContent">'+
+    
+    '<p> <a href="http://in.yahoo.com/hacku">'+
+    '</div>'+
+    '</div>';
+
+	var infowindow = new google.maps.InfoWindow({
+    	content: contentString
+	});
+
+	var image = {
+    			url:"{{ MEDIA_URL }}twitter.gif" 
+    			//'twitter.gif',
+    				// This marker is 20 pixels wide by 32 pixels tall.
+   			 
+    	};
+	
+       
+
+
+
+	var yql_base_uri="http://query.yahooapis.com/v1/yql";
+    var latl=[];
+    /*var address = ["Mumbai","IIT Madras","IIT Kharagpur"];{'address':"Surat"},{'address':"Delhi"}
+    ,{'address':"Chandigarh"},{'address':"GUwahati"},{'address':"Islamabad"},{'address':"Ranchi"},{'address':"BHopal"},{'address':"lahore"},{'address':"Indonesia"},{'address':"China"}];*/
+	//var add=["A","B","C","D","E","F","G","H"];
+    function isAllLoaded(){
+       for(var i=address.length-1;i>=0;i--){
+            if(latl[i]==='loading'){
+                return false;
+            }
+        }
+        return true;
+    }
+    function makemarker(){
+        console.log('--------',latl)
+        for(var i=address.length-1;i>=0;i--){
+          //  alert(address[i]);
+        
+            var mylat= new google.maps.LatLng(latl[i][0],latl[i][1]);
+            var marker=new google.maps.Marker({
+                position: mylat,
+                
+                map : map
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+  			infowindow.open(map,marker);
+		});
+        }
+
+     }
+    function getCallbackFunction(index){
+
+        return (function (yql_results){
+console.log(yql_results);
+            latl[index]=[];
+            try{
+                if(yql_results.query.count>=2){
+                    latl[index][0]=yql_results.query.results.Result[0].latitude;
+                    latl[index][1]=yql_results.query.results.Result[0].longitude;
+                }
+                else
+                {
+                    latl[index][0]=yql_results.query.results.Result.latitude;
+                    latl[index][1]=yql_results.query.results.Result.longitude;
+
+                }
+            }catch(e){
+            }
+
+            console.log(latl);
+            //if(isAllLoaded())
+            {
+                   makemarker();           
+            }
+        
+        });
+    }   
+    for(var i=address.length-1;i>=0;i--){
+        latl[i]='loading';
+    }
+	for(var i=address.length-1;i>=0;i--)
+	{      
+        var yql_results;
+        var yqlquery_url="http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20from%20geo.placefinder%20WHERE%20text%3D'"+address[i]+"'&format=json";
+        getJSONFromYQL(yqlquery_url,getCallbackFunction(i));
+        
+		
+      }
+           	
+	
+}
+	
+
+   //myVar=setTimeout(function(){alert("Hello")},100000);
+	google.maps.event.addDomListener(window, 'load', initialize);
+
+	
+
+}); // end ready
+</script>
+
+
+
+<script>
+
+</script>
+
+
+
+
+
+
+
+</head>
+<body>
+<div class="wrapper">
+<div class="child" align="left">
+<p class="logo">Twinfluence &nbsp;@
+{% if person.screen_name %}
+    {{person.screen_name}}
+{% endif %}
+ </p>
+</div>
+<!--
+<div class="header">
+	
+</div>
+-->
+<div id="login">
+<p id="open">Lookup</p>
+
+<form action="" method="POST">
+	<p>
+		<label for="username">Screen Name:</label>
+{% csrf_token %}
+		<input type="text" name="username" id="username" placeholder="Yahoo!">
+	</p>
+	
+	<p>
+		<input type="submit" name="button" id="button" value="Submit">
+	</p>
+</form>
+
+
+
+</div>
+<!--<div class="content">
+<div class="main">
+
+</div>
+</div>-->
+
+<div>
+    <div id="data">
+    <table>
+   
+    {% if influence %}
+      <tr><td><p>  <div id="influence">&nbsp;<b>Influence</b>:{{influence}}<br/><br/></div> </p></td></tr>
+    {% endif %}
+    {% if impact %}
+      <tr><td><p>  <div id="impact">&nbsp;Impact:{{impact}}<br/><br/></div></p></td></tr>
+    {% endif %}
+    {% if reach %}
+      <tr><td><p>  <div id="reach">&nbsp;Reach:{{reach}}<br/><br/></div> </p></td></tr>
+    {% endif %}
+    {% if buzz %}
+      <tr><td><p>  <div id="buzz">&nbsp;Buzz&nbsp;Factor:{{buzz}}<br/><br/></div> </p></td></tr>
+    {% endif %}
+
+    </table>
+    <img class="logo1" src="/media/img/final3.jpeg"/>
+    </div>  
+    <div id="map-canvas"> </div>
+</div>
+
+<!--<iframe src="/new/" width="95%" height="400"></iframe> -->
+
+
+<div class="footer">
+
+<p class="footerp">By Aritra Ghosh, Varun Gangal, Pallavi Gudipati, Nikhil Nainani</p>
+
+</div>
+
+</body>
+
+</html>

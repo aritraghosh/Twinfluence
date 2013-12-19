@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlYOxM9Aw5n0V8zqxeyhMa6kyxnLoDRDU&sensor=true">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+
+
+
+        var mapOptions = {
+          center: new google.maps.LatLng(20,80 ),
+          zoom: 4,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+	var map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+	
+	
+	/*for(var i=0;i<2;i++)
+	{
+		marker[i] = new google.maps.Marker();
+		geocoder[i] = new google.maps.Geocoder();
+	}*/
+	
+	
+       
+
+
+        var address = [{'address': "my facebook profile"},{'address':"Mumbai"},{'address':"Ahmedabad"},{'address':"Surat"},{'address':"Delhi"},{'address':"Sydney"},{'address':"LosAngelos"},{'address':"IITMadras"}];
+	var add=["A","B","C","D","E","F","G","H"];
+	for(var i=7;i>=0;i--)
+	{        
+	
+		var geocoder= new google.maps.Geocoder();
+		var image = {
+    			url: 'twitter.gif',
+    				// This marker is 20 pixels wide by 32 pixels tall.
+   			 
+    		};
+		geocoder.geocode(address[i], function(results, status) {
+          	if (status == google.maps.GeocoderStatus.OK) {
+            	var marker=new google.maps.Marker({
+		
+           	 position: results[0].geometry.location,
+          	 map: map,
+		title: add[i],
+		icon : image
+		});
+         	 }
+	
+       		 });
+      	
+
+		
+      	}
+	}
+	
+
+
+	
+
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+	
+
+	
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"> </div>
+  </body>
+</html>

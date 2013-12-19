@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sign in &middot; Twitter Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{ MEDIA_URL }}css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+        background: url("{{ MEDIA_URL }}img/examples/background.jpg");
+     	/*background-size: 1440px 800px;*/
+      }
+
+      .form-signin {
+        max-width: 1300px;
+        padding: 80px 129px 80px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+    </style>
+    <link href="{{ MEDIA_URL }}css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ MEDIA_URL }}ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ MEDIA_URL }}ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ MEDIA_URL }}ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="{{ MEDIA_URL }}ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="{{ MEDIA_URL }}ico/favicon.png">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+    
+ 		
+     	<form class="form-signin" action="" method="POST">
+        {% csrf_token %}
+		    <h2 class="form-signin-heading">Choose module</h2>
+		    
+		  <!--  <li class="dropdown">
+		    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Input <b class="caret"></b></a>
+		    <ul class="dropdown-menu">
+		      	<input type="text" class="input-block-level" placeholder="Name/Trends">
+		      	<li><a href="#">Retweets</a></li>
+		      	<li class="divider"></li>
+		        
+		        <li><a href="#">Trends</a></li>
+		        <li class="divider"></li>
+		        
+		        <li><a href="#">Infkuence</a></li>
+		        <li class="divider"></li>
+		     </ul>
+		     </li> -->
+<!--		    <label class="checkbox">
+            {% csrf_token %}
+          	<input type="checkbox" value="remember-me" id="trends"> Trends
+        	</label>  
+		    <label class="checkbox">
+            {% csrf_token %}
+          	<input type="checkbox" value="remember-me" id="retweets"> Retweets
+        	</label>  
+		    <label class="checkbox">
+            {% csrf_token %}
+          	<input type="checkbox" value="remember-me" id="influence"> Influence
+        	</label>  
+        	{% csrf_token %}  -->
+		    <input type="text" class="input-block-level" placeholder="Input" id="username">
+		   	<!-- <input type="password" class="input-block-level" placeholder="Password">
+		    <label class="checkbox"> -->
+		    <!--  <input type="checkbox" value="remember-me"> Remember me
+		    </label> -->
+		    <input class="btn btn-large btn-primary" type="submit">Submit</button>
+      </form>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ STATIC_URL }}jquery.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-transition.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-alert.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-modal.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-dropdown.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-scrollspy.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-tab.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-tooltip.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-popover.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-button.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-collapse.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-carousel.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap-typeahead.js"></script>
+
+  </body>
+</html>
